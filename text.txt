@@ -1,98 +1,172 @@
-!pip install diffusers transformers accelerate safetensors
-!pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
+from diffusers import StableDiffusionPipeline
+import torch
 
-Requirement already satisfied: diffusers in /usr/local/lib/python3.12/dist-packages (0.36.0)
-Requirement already satisfied: transformers in /usr/local/lib/python3.12/dist-packages (5.0.0)
-Requirement already satisfied: accelerate in /usr/local/lib/python3.12/dist-packages (1.12.0)
-Requirement already satisfied: safetensors in /usr/local/lib/python3.12/dist-packages (0.7.0)
-Requirement already satisfied: importlib_metadata in /usr/local/lib/python3.12/dist-packages (from diffusers) (8.7.1)
-Requirement already satisfied: filelock in /usr/local/lib/python3.12/dist-packages (from diffusers) (3.24.3)
-Requirement already satisfied: httpx<1.0.0 in /usr/local/lib/python3.12/dist-packages (from diffusers) (0.28.1)
-Requirement already satisfied: huggingface-hub<2.0,>=0.34.0 in /usr/local/lib/python3.12/dist-packages (from diffusers) (1.4.1)
-Requirement already satisfied: numpy in /usr/local/lib/python3.12/dist-packages (from diffusers) (2.0.2)
-Requirement already satisfied: regex!=2019.12.17 in /usr/local/lib/python3.12/dist-packages (from diffusers) (2025.11.3)
-Requirement already satisfied: requests in /usr/local/lib/python3.12/dist-packages (from diffusers) (2.32.4)
-Requirement already satisfied: Pillow in /usr/local/lib/python3.12/dist-packages (from diffusers) (11.3.0)
-Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.12/dist-packages (from transformers) (26.0)
-Requirement already satisfied: pyyaml>=5.1 in /usr/local/lib/python3.12/dist-packages (from transformers) (6.0.3)
-Requirement already satisfied: tokenizers<=0.23.0,>=0.22.0 in /usr/local/lib/python3.12/dist-packages (from transformers) (0.22.2)
-Requirement already satisfied: typer-slim in /usr/local/lib/python3.12/dist-packages (from transformers) (0.24.0)
-Requirement already satisfied: tqdm>=4.27 in /usr/local/lib/python3.12/dist-packages (from transformers) (4.67.3)
-Requirement already satisfied: psutil in /usr/local/lib/python3.12/dist-packages (from accelerate) (5.9.5)
-Requirement already satisfied: torch>=2.0.0 in /usr/local/lib/python3.12/dist-packages (from accelerate) (2.10.0+cu128)
-Requirement already satisfied: anyio in /usr/local/lib/python3.12/dist-packages (from httpx<1.0.0->diffusers) (4.12.1)
-Requirement already satisfied: certifi in /usr/local/lib/python3.12/dist-packages (from httpx<1.0.0->diffusers) (2026.1.4)
-Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.12/dist-packages (from httpx<1.0.0->diffusers) (1.0.9)
-Requirement already satisfied: idna in /usr/local/lib/python3.12/dist-packages (from httpx<1.0.0->diffusers) (3.11)
-Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.12/dist-packages (from httpcore==1.*->httpx<1.0.0->diffusers) (0.16.0)
-Requirement already satisfied: fsspec>=2023.5.0 in /usr/local/lib/python3.12/dist-packages (from huggingface-hub<2.0,>=0.34.0->diffusers) (2026.2.0)
-Requirement already satisfied: hf-xet<2.0.0,>=1.2.0 in /usr/local/lib/python3.12/dist-packages (from huggingface-hub<2.0,>=0.34.0->diffusers) (1.3.0)
-Requirement already satisfied: shellingham in /usr/local/lib/python3.12/dist-packages (from huggingface-hub<2.0,>=0.34.0->diffusers) (1.5.4)
-Requirement already satisfied: typing-extensions>=4.1.0 in /usr/local/lib/python3.12/dist-packages (from huggingface-hub<2.0,>=0.34.0->diffusers) (4.15.0)
-Requirement already satisfied: setuptools in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (75.2.0)
-Requirement already satisfied: sympy>=1.13.3 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (1.14.0)
-Requirement already satisfied: networkx>=2.5.1 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (3.6.1)
-Requirement already satisfied: jinja2 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (3.1.6)
-Requirement already satisfied: cuda-bindings==12.9.4 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (12.9.4)
-Requirement already satisfied: nvidia-cuda-nvrtc-cu12==12.8.93 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (12.8.93)
-Requirement already satisfied: nvidia-cuda-runtime-cu12==12.8.90 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (12.8.90)
-Requirement already satisfied: nvidia-cuda-cupti-cu12==12.8.90 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (12.8.90)
-Requirement already satisfied: nvidia-cudnn-cu12==9.10.2.21 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (9.10.2.21)
-Requirement already satisfied: nvidia-cublas-cu12==12.8.4.1 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (12.8.4.1)
-Requirement already satisfied: nvidia-cufft-cu12==11.3.3.83 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (11.3.3.83)
-Requirement already satisfied: nvidia-curand-cu12==10.3.9.90 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (10.3.9.90)
-Requirement already satisfied: nvidia-cusolver-cu12==11.7.3.90 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (11.7.3.90)
-Requirement already satisfied: nvidia-cusparse-cu12==12.5.8.93 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (12.5.8.93)
-Requirement already satisfied: nvidia-cusparselt-cu12==0.7.1 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (0.7.1)
-Requirement already satisfied: nvidia-nccl-cu12==2.27.5 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (2.27.5)
-Requirement already satisfied: nvidia-nvshmem-cu12==3.4.5 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (3.4.5)
-Requirement already satisfied: nvidia-nvtx-cu12==12.8.90 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (12.8.90)
-Requirement already satisfied: nvidia-nvjitlink-cu12==12.8.93 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (12.8.93)
-Requirement already satisfied: nvidia-cufile-cu12==1.13.1.3 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (1.13.1.3)
-Requirement already satisfied: triton==3.6.0 in /usr/local/lib/python3.12/dist-packages (from torch>=2.0.0->accelerate) (3.6.0)
-Requirement already satisfied: cuda-pathfinder~=1.1 in /usr/local/lib/python3.12/dist-packages (from cuda-bindings==12.9.4->torch>=2.0.0->accelerate) (1.3.5)
-Requirement already satisfied: zipp>=3.20 in /usr/local/lib/python3.12/dist-packages (from importlib_metadata->diffusers) (3.23.0)
-Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.12/dist-packages (from requests->diffusers) (3.4.4)
-Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.12/dist-packages (from requests->diffusers) (2.5.0)
-Requirement already satisfied: typer>=0.24.0 in /usr/local/lib/python3.12/dist-packages (from typer-slim->transformers) (0.24.1)
-Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.12/dist-packages (from sympy>=1.13.3->torch>=2.0.0->accelerate) (1.3.0)
-Requirement already satisfied: click>=8.2.1 in /usr/local/lib/python3.12/dist-packages (from typer>=0.24.0->typer-slim->transformers) (8.3.1)
-Requirement already satisfied: rich>=12.3.0 in /usr/local/lib/python3.12/dist-packages (from typer>=0.24.0->typer-slim->transformers) (13.9.4)
-Requirement already satisfied: annotated-doc>=0.0.2 in /usr/local/lib/python3.12/dist-packages (from typer>=0.24.0->typer-slim->transformers) (0.0.4)
-Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.12/dist-packages (from jinja2->torch>=2.0.0->accelerate) (3.0.3)
-Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.12/dist-packages (from rich>=12.3.0->typer>=0.24.0->typer-slim->transformers) (4.0.0)
-Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /usr/local/lib/python3.12/dist-packages (from rich>=12.3.0->typer>=0.24.0->typer-slim->transformers) (2.19.2)
-Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.12/dist-packages (from markdown-it-py>=2.2.0->rich>=12.3.0->typer>=0.24.0->typer-slim->transformers) (0.1.2)
-Looking in indexes: https://pypi.org/simple, https://download.pytorch.org/whl/cu118
-Requirement already satisfied: torch in /usr/local/lib/python3.12/dist-packages (2.10.0+cu128)
-Requirement already satisfied: torchvision in /usr/local/lib/python3.12/dist-packages (0.25.0+cu128)
-Requirement already satisfied: torchaudio in /usr/local/lib/python3.12/dist-packages (2.10.0+cu128)
-Requirement already satisfied: filelock in /usr/local/lib/python3.12/dist-packages (from torch) (3.24.3)
-Requirement already satisfied: typing-extensions>=4.10.0 in /usr/local/lib/python3.12/dist-packages (from torch) (4.15.0)
-Requirement already satisfied: setuptools in /usr/local/lib/python3.12/dist-packages (from torch) (75.2.0)
-Requirement already satisfied: sympy>=1.13.3 in /usr/local/lib/python3.12/dist-packages (from torch) (1.14.0)
-Requirement already satisfied: networkx>=2.5.1 in /usr/local/lib/python3.12/dist-packages (from torch) (3.6.1)
-Requirement already satisfied: jinja2 in /usr/local/lib/python3.12/dist-packages (from torch) (3.1.6)
-Requirement already satisfied: fsspec>=0.8.5 in /usr/local/lib/python3.12/dist-packages (from torch) (2026.2.0)
-Requirement already satisfied: cuda-bindings==12.9.4 in /usr/local/lib/python3.12/dist-packages (from torch) (12.9.4)
-Requirement already satisfied: nvidia-cuda-nvrtc-cu12==12.8.93 in /usr/local/lib/python3.12/dist-packages (from torch) (12.8.93)
-Requirement already satisfied: nvidia-cuda-runtime-cu12==12.8.90 in /usr/local/lib/python3.12/dist-packages (from torch) (12.8.90)
-Requirement already satisfied: nvidia-cuda-cupti-cu12==12.8.90 in /usr/local/lib/python3.12/dist-packages (from torch) (12.8.90)
-Requirement already satisfied: nvidia-cudnn-cu12==9.10.2.21 in /usr/local/lib/python3.12/dist-packages (from torch) (9.10.2.21)
-Requirement already satisfied: nvidia-cublas-cu12==12.8.4.1 in /usr/local/lib/python3.12/dist-packages (from torch) (12.8.4.1)
-Requirement already satisfied: nvidia-cufft-cu12==11.3.3.83 in /usr/local/lib/python3.12/dist-packages (from torch) (11.3.3.83)
-Requirement already satisfied: nvidia-curand-cu12==10.3.9.90 in /usr/local/lib/python3.12/dist-packages (from torch) (10.3.9.90)
-Requirement already satisfied: nvidia-cusolver-cu12==11.7.3.90 in /usr/local/lib/python3.12/dist-packages (from torch) (11.7.3.90)
-Requirement already satisfied: nvidia-cusparse-cu12==12.5.8.93 in /usr/local/lib/python3.12/dist-packages (from torch) (12.5.8.93)
-Requirement already satisfied: nvidia-cusparselt-cu12==0.7.1 in /usr/local/lib/python3.12/dist-packages (from torch) (0.7.1)
-Requirement already satisfied: nvidia-nccl-cu12==2.27.5 in /usr/local/lib/python3.12/dist-packages (from torch) (2.27.5)
-Requirement already satisfied: nvidia-nvshmem-cu12==3.4.5 in /usr/local/lib/python3.12/dist-packages (from torch) (3.4.5)
-Requirement already satisfied: nvidia-nvtx-cu12==12.8.90 in /usr/local/lib/python3.12/dist-packages (from torch) (12.8.90)
-Requirement already satisfied: nvidia-nvjitlink-cu12==12.8.93 in /usr/local/lib/python3.12/dist-packages (from torch) (12.8.93)
-Requirement already satisfied: nvidia-cufile-cu12==1.13.1.3 in /usr/local/lib/python3.12/dist-packages (from torch) (1.13.1.3)
-Requirement already satisfied: triton==3.6.0 in /usr/local/lib/python3.12/dist-packages (from torch) (3.6.0)
-Requirement already satisfied: cuda-pathfinder~=1.1 in /usr/local/lib/python3.12/dist-packages (from cuda-bindings==12.9.4->torch) (1.3.5)
-Requirement already satisfied: numpy in /usr/local/lib/python3.12/dist-packages (from torchvision) (2.0.2)
-Requirement already satisfied: pillow!=8.3.*,>=5.3.0 in /usr/local/lib/python3.12/dist-packages (from torchvision) (11.3.0)
-Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.12/dist-packages (from sympy>=1.13.3->torch) (1.3.0)
-Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.12/dist-packages (from jinja2->torch) (3.0.3)
+pipe = StableDiffusionPipeline.from_pretrained(
+    "runwayml/stable-diffusion-v1-5",
+    torch_dtype=torch.float16
+).to("cuda")
+
+
+
+Flax classes are deprecated and will be removed in Diffusers v1.0.0. We recommend migrating to PyTorch classes or pinning your version of Diffusers.
+Flax classes are deprecated and will be removed in Diffusers v1.0.0. We recommend migrating to PyTorch classes or pinning your version of Diffusers.
+Couldn't connect to the Hub: [Errno -3] Temporary failure in name resolution.
+Will try to load from local cache.
+---------------------------------------------------------------------------
+ConnectError                              Traceback (most recent call last)
+/usr/local/lib/python3.12/dist-packages/httpx/_transports/default.py in map_httpcore_exceptions()
+    100     try:
+--> 101         yield
+    102     except Exception as exc:
+
+/usr/local/lib/python3.12/dist-packages/httpx/_transports/default.py in handle_request(self, request)
+    249         with map_httpcore_exceptions():
+--> 250             resp = self._pool.handle_request(req)
+    251 
+
+/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection_pool.py in handle_request(self, request)
+    255             self._close_connections(closing)
+--> 256             raise exc from None
+    257 
+
+/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection_pool.py in handle_request(self, request)
+    235                     # Send the request on the assigned connection.
+--> 236                     response = connection.handle_request(
+    237                         pool_request.request
+
+/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection.py in handle_request(self, request)
+    100             self._connect_failed = True
+--> 101             raise exc
+    102 
+
+/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection.py in handle_request(self, request)
+     77                 if self._connection is None:
+---> 78                     stream = self._connect(request)
+     79 
+
+/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection.py in _connect(self, request)
+    123                     with Trace("connect_tcp", logger, request, kwargs) as trace:
+--> 124                         stream = self._network_backend.connect_tcp(**kwargs)
+    125                         trace.return_value = stream
+
+/usr/local/lib/python3.12/dist-packages/httpcore/_backends/sync.py in connect_tcp(self, host, port, timeout, local_address, socket_options)
+    206 
+--> 207         with map_exceptions(exc_map):
+    208             sock = socket.create_connection(
+
+/usr/lib/python3.12/contextlib.py in __exit__(self, typ, value, traceback)
+    157             try:
+--> 158                 self.gen.throw(value)
+    159             except StopIteration as exc:
+
+/usr/local/lib/python3.12/dist-packages/httpcore/_exceptions.py in map_exceptions(map)
+     13             if isinstance(exc, from_exc):
+---> 14                 raise to_exc(exc) from exc
+     15         raise  # pragma: nocover
+
+ConnectError: [Errno -3] Temporary failure in name resolution
+
+The above exception was the direct cause of the following exception:
+
+ConnectError                              Traceback (most recent call last)
+/usr/local/lib/python3.12/dist-packages/diffusers/pipelines/pipeline_utils.py in download(cls, pretrained_model_name, **kwargs)
+   1597             try:
+-> 1598                 info = model_info(pretrained_model_name, token=token, revision=revision)
+   1599             except (HfHubHTTPError, OfflineModeIsEnabled, requests.ConnectionError, httpx.NetworkError) as e:
+
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_validators.py in _inner_fn(*args, **kwargs)
+     88 
+---> 89         return fn(*args, **kwargs)
+     90 
+
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/hf_api.py in model_info(self, repo_id, revision, timeout, securityStatus, files_metadata, expand, token)
+   2789             params["expand"] = expand
+-> 2790         r = get_session().get(path, headers=headers, timeout=timeout, params=params)
+   2791         hf_raise_for_status(r)
+
+/usr/local/lib/python3.12/dist-packages/httpx/_client.py in get(self, url, params, headers, cookies, auth, follow_redirects, timeout, extensions)
+   1052         """
+-> 1053         return self.request(
+   1054             "GET",
+
+/usr/local/lib/python3.12/dist-packages/httpx/_client.py in request(self, method, url, content, data, files, json, params, headers, cookies, auth, follow_redirects, timeout, extensions)
+    824         )
+--> 825         return self.send(request, auth=auth, follow_redirects=follow_redirects)
+    826 
+
+/usr/local/lib/python3.12/dist-packages/httpx/_client.py in send(self, request, stream, auth, follow_redirects)
+    913 
+--> 914         response = self._send_handling_auth(
+    915             request,
+
+/usr/local/lib/python3.12/dist-packages/httpx/_client.py in _send_handling_auth(self, request, auth, follow_redirects, history)
+    941             while True:
+--> 942                 response = self._send_handling_redirects(
+    943                     request,
+
+/usr/local/lib/python3.12/dist-packages/httpx/_client.py in _send_handling_redirects(self, request, follow_redirects, history)
+    978 
+--> 979             response = self._send_single_request(request)
+    980             try:
+
+/usr/local/lib/python3.12/dist-packages/httpx/_client.py in _send_single_request(self, request)
+   1013         with request_context(request=request):
+-> 1014             response = transport.handle_request(request)
+   1015 
+
+/usr/local/lib/python3.12/dist-packages/httpx/_transports/default.py in handle_request(self, request)
+    248         )
+--> 249         with map_httpcore_exceptions():
+    250             resp = self._pool.handle_request(req)
+
+/usr/lib/python3.12/contextlib.py in __exit__(self, typ, value, traceback)
+    157             try:
+--> 158                 self.gen.throw(value)
+    159             except StopIteration as exc:
+
+/usr/local/lib/python3.12/dist-packages/httpx/_transports/default.py in map_httpcore_exceptions()
+    117         message = str(exc)
+--> 118         raise mapped_exc(message) from exc
+    119 
+
+ConnectError: [Errno -3] Temporary failure in name resolution
+
+The above exception was the direct cause of the following exception:
+
+OSError                                   Traceback (most recent call last)
+/tmp/ipykernel_55/533281062.py in <cell line: 0>()
+      2 import torch
+      3 
+----> 4 pipe = StableDiffusionPipeline.from_pretrained(
+      5     "runwayml/stable-diffusion-v1-5",
+      6     torch_dtype=torch.float16
+
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_validators.py in _inner_fn(*args, **kwargs)
+     87         kwargs = smoothly_deprecate_legacy_arguments(fn_name=fn.__name__, kwargs=kwargs)
+     88 
+---> 89         return fn(*args, **kwargs)
+     90 
+     91     return _inner_fn  # type: ignore
+
+/usr/local/lib/python3.12/dist-packages/diffusers/pipelines/pipeline_utils.py in from_pretrained(cls, pretrained_model_name_or_path, **kwargs)
+    827                     " is neither a valid local path nor a valid repo id. Please check the parameter."
+    828                 )
+--> 829             cached_folder = cls.download(
+    830                 pretrained_model_name_or_path,
+    831                 cache_dir=cache_dir,
+
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_validators.py in _inner_fn(*args, **kwargs)
+     87         kwargs = smoothly_deprecate_legacy_arguments(fn_name=fn.__name__, kwargs=kwargs)
+     88 
+---> 89         return fn(*args, **kwargs)
+     90 
+     91     return _inner_fn  # type: ignore
+
+/usr/local/lib/python3.12/dist-packages/diffusers/pipelines/pipeline_utils.py in download(cls, pretrained_model_name, **kwargs)
+   1790             else:
+   1791                 # 2. we forced `local_files_only=True` when `model_info` failed
+-> 1792                 raise EnvironmentError(
+   1793                     f"Cannot load model {pretrained_model_name}: model is not cached locally and an error occurred"
+   1794                     " while trying to fetch metadata from the Hub. Please check out the root cause in the stacktrace"
+
+OSError: Cannot load model runwayml/stable-diffusion-v1-5: model is not cached locally and an error occurred while trying to fetch metadata from the Hub. Please check out the root cause in the stacktrace above.
