@@ -3,170 +3,36 @@ import torch
 
 pipe = StableDiffusionPipeline.from_pretrained(
     "runwayml/stable-diffusion-v1-5",
-    torch_dtype=torch.float16
+    torch_dtype=torch.float16,
+    local_files_only=False
 ).to("cuda")
 
 
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+model_index.json: 100%
+ 541/541 [00:00<00:00, 59.6kB/s]
+Download complete: 
+ 5.48G/? [00:30<00:00, 297MB/s]
+Fetching 15 files: 100%
+ 15/15 [00:20<00:00,  2.69s/it]
+Loading pipeline components...: 100%
+ 7/7 [00:04<00:00,  1.60it/s]
+Loading weights: 100%
+ 196/196 [00:00<00:00, 545.29it/s, Materializing param=text_model.final_layer_norm.weight]
+CLIPTextModel LOAD REPORT from: /root/.cache/huggingface/hub/models--runwayml--stable-diffusion-v1-5/snapshots/451f4fe16113bff5a5d2269ed5ad43b0592e9a14/text_encoder
+Key                                | Status     |  | 
+-----------------------------------+------------+--+-
+text_model.embeddings.position_ids | UNEXPECTED |  | 
 
-Flax classes are deprecated and will be removed in Diffusers v1.0.0. We recommend migrating to PyTorch classes or pinning your version of Diffusers.
-Flax classes are deprecated and will be removed in Diffusers v1.0.0. We recommend migrating to PyTorch classes or pinning your version of Diffusers.
-Couldn't connect to the Hub: [Errno -3] Temporary failure in name resolution.
-Will try to load from local cache.
----------------------------------------------------------------------------
-ConnectError                              Traceback (most recent call last)
-/usr/local/lib/python3.12/dist-packages/httpx/_transports/default.py in map_httpcore_exceptions()
-    100     try:
---> 101         yield
-    102     except Exception as exc:
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights: 100%
+ 396/396 [00:00<00:00, 459.45it/s, Materializing param=visual_projection.weight]
+StableDiffusionSafetyChecker LOAD REPORT from: /root/.cache/huggingface/hub/models--runwayml--stable-diffusion-v1-5/snapshots/451f4fe16113bff5a5d2269ed5ad43b0592e9a14/safety_checker
+Key                                               | Status     |  | 
+--------------------------------------------------+------------+--+-
+vision_model.vision_model.embeddings.position_ids | UNEXPECTED |  | 
 
-/usr/local/lib/python3.12/dist-packages/httpx/_transports/default.py in handle_request(self, request)
-    249         with map_httpcore_exceptions():
---> 250             resp = self._pool.handle_request(req)
-    251 
-
-/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection_pool.py in handle_request(self, request)
-    255             self._close_connections(closing)
---> 256             raise exc from None
-    257 
-
-/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection_pool.py in handle_request(self, request)
-    235                     # Send the request on the assigned connection.
---> 236                     response = connection.handle_request(
-    237                         pool_request.request
-
-/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection.py in handle_request(self, request)
-    100             self._connect_failed = True
---> 101             raise exc
-    102 
-
-/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection.py in handle_request(self, request)
-     77                 if self._connection is None:
----> 78                     stream = self._connect(request)
-     79 
-
-/usr/local/lib/python3.12/dist-packages/httpcore/_sync/connection.py in _connect(self, request)
-    123                     with Trace("connect_tcp", logger, request, kwargs) as trace:
---> 124                         stream = self._network_backend.connect_tcp(**kwargs)
-    125                         trace.return_value = stream
-
-/usr/local/lib/python3.12/dist-packages/httpcore/_backends/sync.py in connect_tcp(self, host, port, timeout, local_address, socket_options)
-    206 
---> 207         with map_exceptions(exc_map):
-    208             sock = socket.create_connection(
-
-/usr/lib/python3.12/contextlib.py in __exit__(self, typ, value, traceback)
-    157             try:
---> 158                 self.gen.throw(value)
-    159             except StopIteration as exc:
-
-/usr/local/lib/python3.12/dist-packages/httpcore/_exceptions.py in map_exceptions(map)
-     13             if isinstance(exc, from_exc):
----> 14                 raise to_exc(exc) from exc
-     15         raise  # pragma: nocover
-
-ConnectError: [Errno -3] Temporary failure in name resolution
-
-The above exception was the direct cause of the following exception:
-
-ConnectError                              Traceback (most recent call last)
-/usr/local/lib/python3.12/dist-packages/diffusers/pipelines/pipeline_utils.py in download(cls, pretrained_model_name, **kwargs)
-   1597             try:
--> 1598                 info = model_info(pretrained_model_name, token=token, revision=revision)
-   1599             except (HfHubHTTPError, OfflineModeIsEnabled, requests.ConnectionError, httpx.NetworkError) as e:
-
-/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_validators.py in _inner_fn(*args, **kwargs)
-     88 
----> 89         return fn(*args, **kwargs)
-     90 
-
-/usr/local/lib/python3.12/dist-packages/huggingface_hub/hf_api.py in model_info(self, repo_id, revision, timeout, securityStatus, files_metadata, expand, token)
-   2789             params["expand"] = expand
--> 2790         r = get_session().get(path, headers=headers, timeout=timeout, params=params)
-   2791         hf_raise_for_status(r)
-
-/usr/local/lib/python3.12/dist-packages/httpx/_client.py in get(self, url, params, headers, cookies, auth, follow_redirects, timeout, extensions)
-   1052         """
--> 1053         return self.request(
-   1054             "GET",
-
-/usr/local/lib/python3.12/dist-packages/httpx/_client.py in request(self, method, url, content, data, files, json, params, headers, cookies, auth, follow_redirects, timeout, extensions)
-    824         )
---> 825         return self.send(request, auth=auth, follow_redirects=follow_redirects)
-    826 
-
-/usr/local/lib/python3.12/dist-packages/httpx/_client.py in send(self, request, stream, auth, follow_redirects)
-    913 
---> 914         response = self._send_handling_auth(
-    915             request,
-
-/usr/local/lib/python3.12/dist-packages/httpx/_client.py in _send_handling_auth(self, request, auth, follow_redirects, history)
-    941             while True:
---> 942                 response = self._send_handling_redirects(
-    943                     request,
-
-/usr/local/lib/python3.12/dist-packages/httpx/_client.py in _send_handling_redirects(self, request, follow_redirects, history)
-    978 
---> 979             response = self._send_single_request(request)
-    980             try:
-
-/usr/local/lib/python3.12/dist-packages/httpx/_client.py in _send_single_request(self, request)
-   1013         with request_context(request=request):
--> 1014             response = transport.handle_request(request)
-   1015 
-
-/usr/local/lib/python3.12/dist-packages/httpx/_transports/default.py in handle_request(self, request)
-    248         )
---> 249         with map_httpcore_exceptions():
-    250             resp = self._pool.handle_request(req)
-
-/usr/lib/python3.12/contextlib.py in __exit__(self, typ, value, traceback)
-    157             try:
---> 158                 self.gen.throw(value)
-    159             except StopIteration as exc:
-
-/usr/local/lib/python3.12/dist-packages/httpx/_transports/default.py in map_httpcore_exceptions()
-    117         message = str(exc)
---> 118         raise mapped_exc(message) from exc
-    119 
-
-ConnectError: [Errno -3] Temporary failure in name resolution
-
-The above exception was the direct cause of the following exception:
-
-OSError                                   Traceback (most recent call last)
-/tmp/ipykernel_55/533281062.py in <cell line: 0>()
-      2 import torch
-      3 
-----> 4 pipe = StableDiffusionPipeline.from_pretrained(
-      5     "runwayml/stable-diffusion-v1-5",
-      6     torch_dtype=torch.float16
-
-/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_validators.py in _inner_fn(*args, **kwargs)
-     87         kwargs = smoothly_deprecate_legacy_arguments(fn_name=fn.__name__, kwargs=kwargs)
-     88 
----> 89         return fn(*args, **kwargs)
-     90 
-     91     return _inner_fn  # type: ignore
-
-/usr/local/lib/python3.12/dist-packages/diffusers/pipelines/pipeline_utils.py in from_pretrained(cls, pretrained_model_name_or_path, **kwargs)
-    827                     " is neither a valid local path nor a valid repo id. Please check the parameter."
-    828                 )
---> 829             cached_folder = cls.download(
-    830                 pretrained_model_name_or_path,
-    831                 cache_dir=cache_dir,
-
-/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_validators.py in _inner_fn(*args, **kwargs)
-     87         kwargs = smoothly_deprecate_legacy_arguments(fn_name=fn.__name__, kwargs=kwargs)
-     88 
----> 89         return fn(*args, **kwargs)
-     90 
-     91     return _inner_fn  # type: ignore
-
-/usr/local/lib/python3.12/dist-packages/diffusers/pipelines/pipeline_utils.py in download(cls, pretrained_model_name, **kwargs)
-   1790             else:
-   1791                 # 2. we forced `local_files_only=True` when `model_info` failed
--> 1792                 raise EnvironmentError(
-   1793                     f"Cannot load model {pretrained_model_name}: model is not cached locally and an error occurred"
-   1794                     " while trying to fetch metadata from the Hub. Please check out the root cause in the stacktrace"
-
-OSError: Cannot load model runwayml/stable-diffusion-v1-5: model is not cached locally and an error occurred while trying to fetch metadata from the Hub. Please check out the root cause in the stacktrace above.
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
