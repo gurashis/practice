@@ -1,0 +1,627 @@
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\groq_test.py
+
+File content :-
+from groq import Groq
+
+# Replace with your actual API key
+client = Groq(api_key="")
+
+def test_groq():
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",   # Correct model name
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Hello Groq! Can you explain what BoB means in TCS letters?"}
+        ]
+    )
+    print("\nModel Output:\n")
+    print(response.choices[0].message.content)
+
+if __name__ == "__main__":
+    test_groq()
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\notes.txt
+
+File content :-
+go to console.groq.com
+login with email (not google sso)
+provide gmail
+Open gmail on other tab, and check new email from groq. Click on login link
+Project - Default Project --- key - project_01kkygdb68fgf97y1zq2qr9cz3
+API key --- disp name = RAGGroq ---- key = 
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\CORA\castle.png
+
+SKIPPING FILE CONTENT AS IT IS A NON TEXT/BINARY FILE
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\CORA\CORA - Copy.html
+
+File content :-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cora Chatbot</title>
+<style>
+  body {
+    background-color: #ffe6f2;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: #d63384;
+    text-align: center;
+    padding: 20px;
+  }
+  #chatbox {
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    background: #fff0f6;
+    border: 2px solid #ff99cc;
+    border-radius: 15px;
+    padding: 15px;
+    height: 400px;
+    overflow-y: auto;
+  }
+  .message {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .user {
+    background: #ffb3d9;
+    text-align: right;
+  }
+  .cora {
+    background: #ffd6eb;
+    text-align: left;
+  }
+  #inputArea {
+    margin-top: 15px;
+  }
+  input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ff99cc;
+  }
+  button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff66b2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #ff3399;
+  }
+</style>
+</head>
+<body>
+<h1>Meet Cora</h1>
+<div id="chatbox"></div>
+<div id="inputArea">
+  <input id="userInput" type="text" placeholder="Talk to Cora...">
+  <button onclick="sendMessage()">Send</button>
+  <button onclick="startListening()">Speak</button>
+</div>
+
+<script>
+const API_KEY = ""; // replace with your Groq key
+const chatbox = document.getElementById("chatbox");
+
+function addMessage(text, sender) {
+  const msg = document.createElement("div");
+  msg.className = "message " + sender;
+  msg.textContent = text;
+  chatbox.appendChild(msg);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const userText = input.value.trim();
+  if (!userText) return;
+  addMessage(userText, "user");
+  input.value = "";
+
+  // Call Groq API
+  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {"role": "system", "content": "You are Cora, a charming, playful assistant who talks kindly to a 5-year-old girl. Always respond warmly and in simple language."},
+        {"role": "user", "content": userText}
+      ]
+    })
+  });
+
+  const data = await response.json();
+  const coraText = data.choices[0].message.content;
+  addMessage(coraText, "cora");
+  speakText(coraText);
+}
+
+// Speech-to-Text
+function startListening() {
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = "en-US";
+  recognition.start();
+  recognition.onresult = function(event) {
+    const transcript = event.results[0][0].transcript;
+    document.getElementById("userInput").value = transcript;
+    sendMessage();
+  };
+}
+
+// Text-to-Speech
+function speakText(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = speechSynthesis.getVoices().find(v => v.name.includes("Female") || v.name.includes("Girl")) || speechSynthesis.getVoices()[0];
+  utterance.pitch = 1.2;
+  utterance.rate = 1.0;
+  speechSynthesis.speak(utterance);
+}
+</script>
+</body>
+</html>
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\CORA\CORA.html
+
+File content :-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cora Chatbot</title>
+<style>
+  body {
+    background-color: #ffe6f2;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    color: #d63384;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 {
+    margin: 10px;
+  }
+  #mainArea {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+  .sideImage {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    margin: 0 10px;
+  }
+  #chatbox {
+    flex: 2;
+    max-width: 600px;
+    background: #fff0f6;
+    border: 2px solid #ff99cc;
+    border-radius: 15px;
+    padding: 15px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  .message {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+  }
+  .user {
+    background: #ffb3d9;
+    text-align: right;
+  }
+  .cora {
+    background: #ffd6eb;
+    text-align: left;
+  }
+  #inputArea {
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: #ffe6f2;
+    box-sizing: border-box;
+  }
+  input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ff99cc;
+    margin-right: 10px;
+  }
+  button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff66b2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #ff3399;
+  }
+</style>
+</head>
+<body>
+<h1>🌸 Meet Cora 🌸</h1>
+<div id="mainArea">
+  <!-- Left image placeholder -->
+  <div class="sideImage" style="background-image: url('');"></div>
+
+  <!-- Chatbox -->
+  <div id="chatbox"></div>
+
+  <!-- Right image placeholder -->
+  <div class="sideImage" style="background-image: url('');"></div>
+</div>
+
+<div id="inputArea">
+  <input id="userInput" type="text" placeholder="Talk to Cora...">
+  <button onclick="sendMessage()">Send</button>
+  <button onclick="startListening()">🎤 Speak</button>
+</div>
+
+<script>
+const API_KEY = ""; // replace with your Groq key
+const chatbox = document.getElementById("chatbox");
+
+function addMessage(text, sender) {
+  const msg = document.createElement("div");
+  msg.className = "message " + sender;
+  msg.textContent = text;
+  chatbox.appendChild(msg);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const userText = input.value.trim();
+  if (!userText) return;
+  addMessage(userText, "user");
+  input.value = "";
+
+  // Call Groq API
+  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {"role": "system", "content": "You are Cora, a charming, playful assistant who talks kindly to a 5-year-old girl. Always respond warmly and in simple language."},
+        {"role": "user", "content": userText}
+      ]
+    })
+  });
+
+  const data = await response.json();
+  const coraText = data.choices[0].message.content;
+  addMessage(coraText, "cora");
+  speakText(coraText);
+}
+
+// Speech-to-Text
+function startListening() {
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = "en-US";
+  recognition.start();
+  recognition.onresult = function(event) {
+    const transcript = event.results[0][0].transcript;
+    document.getElementById("userInput").value = transcript;
+    sendMessage();
+  };
+}
+
+// Text-to-Speech
+function speakText(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.pitch = 1.2;
+  utterance.rate = 1.0;
+
+  function setVoiceAndSpeak() {
+    const voices = speechSynthesis.getVoices();
+    const targetVoice = voices.find(v => v.name === "Google UK English Female");
+    if (targetVoice) {
+      utterance.voice = targetVoice;
+    } else {
+      console.warn("Google UK English Female not found, using default.");
+      utterance.voice = voices[0];
+    }
+    speechSynthesis.speak(utterance);
+  }
+
+  // If voices aren’t loaded yet, wait for them
+  if (speechSynthesis.getVoices().length === 0) {
+    speechSynthesis.onvoiceschanged = setVoiceAndSpeak;
+  } else {
+    setVoiceAndSpeak();
+  }
+}
+</script>
+</body>
+</html>
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\CORA\unicorn.png
+
+SKIPPING FILE CONTENT AS IT IS A NON TEXT/BINARY FILE
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\CORA\android\cmd.txt
+
+File content :-
+python -m http.server 8000
+http://localhost:8000/cora_chatbot.html
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\CORA\android\cora_chatbot.html
+
+File content :-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cora Chatbot</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Comic Neue font -->
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    background-color: #ffe6f2;
+    font-family: 'Comic Neue', cursive, sans-serif;
+    color: #d63384;
+    margin: 20px 0;
+    padding: 0;
+    min-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  h1 {
+    margin: 10px;
+  }
+  #chatArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 15px;
+  }
+  #chatbox {
+    flex: 1;
+    height: 60vh;
+    background: #fff0f6;
+    border: 2px solid #ff99cc;
+    border-radius: 15px;
+    padding: 15px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    margin: 0 20px;
+  }
+  .side-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #ff99cc;
+    background: #ffe6f2;
+    box-shadow: 0 0 15px #ffb3d9;
+  }
+  .message {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+  }
+  .user {
+    background: #ffb3d9;
+    text-align: right;
+  }
+  .cora {
+    background: #ffd6eb;
+    text-align: left;
+  }
+  #inputArea {
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: #ffe6f2;
+    box-sizing: border-box;
+  }
+  input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ff99cc;
+    margin-right: 10px;
+  }
+  button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ff66b2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #ff3399;
+  }
+</style>
+</head>
+<body>
+<h1>🌸 Meet Cora 🌸</h1>
+
+<div id="chatArea">
+  <!-- Left playful placeholder -->
+  <img class="side-image" src="unicorn.png" alt="Cora Image">
+  
+  <div id="chatbox"></div>
+  
+  <!-- Right playful placeholder -->
+  <img class="side-image" src="darves.png" alt="Darves Image">
+</div>
+
+<div id="inputArea">
+  <input id="userInput" type="text" placeholder="Talk to Cora...">
+  <button onclick="sendMessage()">Send</button>
+  <button onclick="startListening()">🎤 Speak</button>
+</div>
+
+<script>
+const API_KEY = ""; // replace with your Groq key
+const chatbox = document.getElementById("chatbox");
+let selectedVoice = null;
+
+// Load voices properly
+function loadVoices() {
+  const voices = speechSynthesis.getVoices();
+  selectedVoice = voices.find(v => v.name === "Google UK English Female");
+  if (!selectedVoice && voices.length) {
+    console.warn("Google UK English Female not found, using default.");
+    selectedVoice = voices[0];
+  }
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function addMessage(text, sender) {
+  const msg = document.createElement("div");
+  msg.className = "message " + sender;
+  msg.textContent = text;
+  chatbox.appendChild(msg);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const userText = input.value.trim();
+  if (!userText) return;
+  addMessage(userText, "user");
+  input.value = "";
+
+  // Call Groq API
+  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {"role": "system", "content": "You are Cora, daughter of another AI agent named Copilot, a charming, playful assistant who talks kindly to a 5-year-old girl called Darves. Always respond warmly and in simple language."},
+        {"role": "user", "content": userText}
+      ]
+    })
+  });
+
+  const data = await response.json();
+  const coraText = data.choices[0].message.content;
+  addMessage(coraText, "cora");
+  speakText(coraText);
+}
+
+// Speech-to-Text (works only on desktop Chrome/Edge)
+function startListening() {
+  if (!('webkitSpeechRecognition' in window)) {
+    alert("Speech recognition not supported on this browser.");
+    return;
+  }
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.start();
+  recognition.onresult = function(event) {
+    const transcript = event.results[0][0].transcript;
+    document.getElementById("userInput").value = transcript;
+    sendMessage();
+  };
+}
+
+// Text-to-Speech
+function speakText(text) {
+  // Replace Darves with Darways ONLY for speech
+  const spokenText = text.replace(/Darves/g, "Darways");
+
+  const utterance = new SpeechSynthesisUtterance(spokenText);
+  utterance.pitch = 1.2;
+  utterance.rate = 1.0;
+  if (selectedVoice) {
+    utterance.voice = selectedVoice;
+  }
+  speechSynthesis.speak(utterance);
+}
+</script>
+</body>
+</html>
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\CORA\android\darves.png
+
+SKIPPING FILE CONTENT AS IT IS A NON TEXT/BINARY FILE
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\RAG\Groq\CORA\android\unicorn.png
+
+SKIPPING FILE CONTENT AS IT IS A NON TEXT/BINARY FILE
+
+--------------------------------
+--------------------------------
+
