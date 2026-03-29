@@ -43,7 +43,10 @@ File content :-
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/9.4.1/samples
  */
-
+plugins {
+    id("com.android.application") version "8.3.0" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.22" apply false
+}
 
 --------------------------------
 --------------------------------
@@ -428,7 +431,8 @@ File content :-
  * For more detailed information on multi-project builds, please refer to https://docs.gradle.org/9.4.1/userguide/multi_project_builds.html in the Gradle documentation.
  */
 
-rootProject.name = 'Kaggle_SD'
+rootProject.name = "Kaggle_SD"
+include(":app")
 
 
 --------------------------------
@@ -461,6 +465,22 @@ networkTimeout=10000
 validateDistributionUrl=true
 zipStoreBase=GRADLE_USER_HOME
 zipStorePath=wrapper/dists
+
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\Images\Kaggle-StableDiffusion\app\src\main\AndroidManifest.xml
+
+File content :-
+
+
+--------------------------------
+--------------------------------
+
+File name/path : C:\Users\pandu\Desktop\GenAI\Images\Kaggle-StableDiffusion\app\src\main\java\com\kagglesd\MainActivity.kt
+
+File content :-
 
 
 --------------------------------
