@@ -473,7 +473,23 @@ zipStorePath=wrapper/dists
 File name/path : C:\Users\pandu\Desktop\GenAI\Images\Kaggle-StableDiffusion\app\src\main\AndroidManifest.xml
 
 File content :-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.kagglestable">
 
+    <application
+        android:allowBackup="true"
+        android:label="KaggleStableDiffusionApp"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
 
 --------------------------------
 --------------------------------
@@ -481,7 +497,23 @@ File content :-
 File name/path : C:\Users\pandu\Desktop\GenAI\Images\Kaggle-StableDiffusion\app\src\main\java\com\kagglesd\MainActivity.kt
 
 File content :-
+package com.example.kagglestable
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val textView = TextView(this).apply {
+            text = "Hello Gurashis, your Kaggle app is running!"
+            textSize = 20f
+        }
+        setContentView(textView)
+    }
+}
 
 --------------------------------
 --------------------------------
