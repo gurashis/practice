@@ -1,0 +1,248 @@
+    =========================== USB Port4 ===========================
+
+Connection Status        : 0x01 (Device is connected)
+Port Chain               : 1-4
+Properties               : 0x01
+ IsUserConnectable       : yes
+ PortIsDebugCapable      : no
+ PortHasMultiCompanions  : no
+ PortConnectorIsTypeC    : no
+ConnectionIndex          : 0x04 (Port 4)
+CompanionIndex           : 0
+ CompanionHubSymLnk      : USB#ROOT_HUB30#4&1f16ebb7&0&0#{f18a0e88-c30c-11d0-8815-00a0c906bed8}
+ CompanionPortNumber     : 0x02 (Port 2)
+ -> CompanionPortChain   : 1-2
+
+      ========================== Summary =========================
+Vendor ID                : 0x0781 (Sandisk Technologies, Inc.)
+Product ID               : 0x5581
+Manufacturer String      : " USB"
+Product String           : " SanDisk 3.2Gen1"
+Serial                   : "040170711096086ff839a5f266eaf52686a1495b709822ad4856156dfec9040a0790000000000000000000001f0a7f0800017b18815581076bb2db34"
+USB Version              : 2.1 (USB 3.0 connected at HighSpeed - 480 Mbit/s)
+Port maximum Speed       : High-Speed (Companion Port 1-2 is doing the SuperSpeed)
+Device maximum Speed     : SuperSpeed
+Device Connection Speed  : High-Speed
+Self powered             : no
+Demanded Current         : 224 mA
+Used Endpoints           : 3
+
+      ======================== USB Device ========================
+
+        +++++++++++++++++ Device Information ++++++++++++++++++
+Device Description       : USB Mass Storage Device
+BusReported Device Desc  :  SanDisk 3.2Gen1
+Device Path              : \\?\USB#VID_0781&PID_5581#040170711096086ff839a5f266eaf52686a1495b709822ad4856156dfec9040a0790000000000000000000001f0a7f0800017b18815581076bb2db34#{a5dcbf10-6530-11d2-901f-00c04fb951ed} (GUID_DEVINTERFACE_USB_DEVICE)
+Kernel Name              : \Device\USBPDO-5
+Device ID                : USB\VID_0781&PID_5581\040170711096086FF839A5F266EAF52686A1495B709822AD4856156DFEC9040A0790000000000000000000001F0A7F0800017B18815581076BB2DB34
+Hardware IDs             : USB\VID_0781&PID_5581&REV_0100 USB\VID_0781&PID_5581
+Driver KeyName           : {36fc9e60-c465-11cf-8056-444553540000}\0014 (GUID_DEVCLASS_USB)
+Driver                   : \SystemRoot\System32\drivers\USBSTOR.SYS (Version: 10.0.19041.4355  Date: 2024-06-01  Company: Microsoft Corporation)
+Driver Inf               : C:\WINDOWS\inf\usbstor.inf
+Legacy BusType           : PNPBus
+Class                    : USB
+Class GUID               : {36fc9e60-c465-11cf-8056-444553540000} (GUID_DEVCLASS_USB)
+Service                  : USBSTOR
+Enumerator               : USB
+Location Info            : Port_#0004.Hub_#0003
+Address                  : 4
+Location IDs             : PCIROOT(0)#PCI(1000)#USBROOT(0)#USB(4), ACPI(_SB_)#ACPI(PCI0)#ACPI(XHC0)#ACPI(RHUB)#USB(4)
+Container ID             : {a7ab9774-92de-525c-a537-aa160f080834}
+Manufacturer Info        : Compatible USB storage device
+Capabilities             : 0x94 (Removable, UniqueID, SurpriseRemovalOK)
+Status                   : 0x0180600A (DN_DRIVER_LOADED, DN_STARTED, DN_DISABLEABLE, DN_REMOVABLE, DN_NT_ENUMERATOR, DN_NT_DRIVER)
+First Install Date       : 2026-04-04 13:40:24
+Last Arrival Date        : 2026-04-04 15:28:07
+EnhancedPowerMgmtEnabled : 0
+Power State              : D0 (supported: D0, D2, D3, wake from D0, wake from D2)
+
+        +++++++++++++++++ Registry USB Flags +++++++++++++++++
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\usbflags\078155810100
+ osvc                    : REG_BINARY 00 00
+
+        ---------------- Connection Information ---------------
+Connection Index         : 0x04 (Port 4)
+Connection Status        : 0x01 (DeviceConnected)
+Current Config Value     : 0x01 (Configuration 1)
+Device Address           : 0x01 (1)
+Is Hub                   : 0x00 (no)
+Device Bus Speed         : 0x02 (High-Speed)
+Number of open Pipes     : 0x02 (2 pipes to data endpoints)
+Pipe[0]                  : EndpointID=1  Direction=IN   ScheduleOffset=0  Type=Bulk  wMaxPacketSize=0x200   bInterval=0  
+Pipe[1]                  : EndpointID=2  Direction=OUT  ScheduleOffset=0  Type=Bulk  wMaxPacketSize=0x200   bInterval=0  
+
+        --------------- Connection Information V2 -------------
+Connection Index         : 0x04 (4)
+Length                   : 0x10 (16 bytes)
+SupportedUsbProtocols    : 0x03
+ Usb110                  : 1 (yes, port supports USB 1.1)
+ Usb200                  : 1 (yes, port supports USB 2.0)
+ Usb300                  : 0 (no, port not supports USB 3.0) -> but Companion Port 1-2 does
+ ReservedMBZ             : 0x00
+Flags                    : 0x02
+ DevIsOpAtSsOrHigher     : 0 (Device is not operating at SuperSpeed or higher)
+ DevIsSsCapOrHigher      : 1 (Device is SuperSpeed capable or higher)
+ DevIsOpAtSsPlusOrHigher : 0 (Device is not operating at SuperSpeedPlus or higher)
+ DevIsSsPlusCapOrHigher  : 0 (Device is not SuperSpeedPlus capable or higher)
+ ReservedMBZ             : 0x00
+
+    ---------------------- Device Descriptor ----------------------
+bLength                  : 0x12 (18 bytes)
+bDescriptorType          : 0x01 (Device Descriptor)
+bcdUSB                   : 0x210 (USB Version 2.1)
+bDeviceClass             : 0x00 (defined by the interface descriptors)
+bDeviceSubClass          : 0x00
+bDeviceProtocol          : 0x00
+bMaxPacketSize0          : 0x40 (64 bytes)
+idVendor                 : 0x0781 (Sandisk Technologies, Inc.)
+idProduct                : 0x5581
+bcdDevice                : 0x0100
+iManufacturer            : 0x01 (String Descriptor 1)
+ Language 0x0409         : " USB"
+iProduct                 : 0x02 (String Descriptor 2)
+ Language 0x0409         : " SanDisk 3.2Gen1"
+iSerialNumber            : 0x03 (String Descriptor 3)
+ Language 0x0409         : "040170711096086ff839a5f266eaf52686a1495b709822ad4856156dfec9040a0790000000000000000000001f0a7f0800017b18815581076bb2db34"
+bNumConfigurations       : 0x01 (1 Configuration)
+
+    ------------------ Configuration Descriptor -------------------
+bLength                  : 0x09 (9 bytes)
+bDescriptorType          : 0x02 (Configuration Descriptor)
+wTotalLength             : 0x0020 (32 bytes)
+bNumInterfaces           : 0x01 (1 Interface)
+bConfigurationValue      : 0x01 (Configuration 1)
+iConfiguration           : 0x00 (No String Descriptor)
+bmAttributes             : 0x80
+ D7: Reserved, set 1     : 0x01
+ D6: Self Powered        : 0x00 (no)
+ D5: Remote Wakeup       : 0x00 (no)
+ D4..0: Reserved, set 0  : 0x00
+MaxPower                 : 0x70 (224 mA)
+
+        ---------------- Interface Descriptor -----------------
+bLength                  : 0x09 (9 bytes)
+bDescriptorType          : 0x04 (Interface Descriptor)
+bInterfaceNumber         : 0x00 (Interface 0)
+bAlternateSetting        : 0x00
+bNumEndpoints            : 0x02 (2 Endpoints)
+bInterfaceClass          : 0x08 (Mass Storage)
+bInterfaceSubClass       : 0x06 (SCSI transparent command set)
+bInterfaceProtocol       : 0x50 (Bulk-Only Transport)
+iInterface               : 0x00 (No String Descriptor)
+
+        ----------------- Endpoint Descriptor -----------------
+bLength                  : 0x07 (7 bytes)
+bDescriptorType          : 0x05 (Endpoint Descriptor)
+bEndpointAddress         : 0x81 (Direction=IN EndpointID=1)
+bmAttributes             : 0x02 (TransferType=Bulk)
+wMaxPacketSize           : 0x0200 (max 512 bytes)
+bInterval                : 0x00 (never NAKs)
+
+        ----------------- Endpoint Descriptor -----------------
+bLength                  : 0x07 (7 bytes)
+bDescriptorType          : 0x05 (Endpoint Descriptor)
+bEndpointAddress         : 0x02 (Direction=OUT EndpointID=2)
+bmAttributes             : 0x02 (TransferType=Bulk)
+wMaxPacketSize           : 0x0200 (max 512 bytes)
+bInterval                : 0x00 (never NAKs)
+
+    --------- Device Qualifier Descriptor (for Full-Speed) --------
+bLength                  : 0x0A (10 bytes)
+bDescriptorType          : 0x06 (Device_qualifier Descriptor)
+bcdUSB                   : 0x210 (USB Version 2.1)
+bDeviceClass             : 0x00 (defined by the interface descriptors)
+bDeviceSubClass          : 0x00
+bDeviceProtocol          : 0x00
+bMaxPacketSize0          : 0x40 (64 Bytes)
+bNumConfigurations       : 0x01 (1 other-speed configuration)
+bReserved                : 0x00
+
+    ------------ Other Speed Configuration Descriptor -------------
+bLength                  : 0x09 (9 bytes)
+bDescriptorType          : 0x07 (Other_speed_configuration Descriptor)
+wTotalLength             : 0x0020 (32 bytes)
+bNumInterfaces           : 0x01 (1 Interface)
+bConfigurationValue      : 0x01 (Configuration 1)
+iConfiguration           : 0x00 (No String Descriptor)
+bmAttributes             : 0x80
+ D7: Reserved, set 1     : 0x01
+ D6: Self Powered        : 0x00 (no)
+ D5: Remote Wakeup       : 0x00 (no)
+ D4..0: Reserved, set 0  : 0x00
+MaxPower                 : 0x70 (224 mA)
+
+        ---------------- Interface Descriptor -----------------
+bLength                  : 0x09 (9 bytes)
+bDescriptorType          : 0x04 (Interface Descriptor)
+bInterfaceNumber         : 0x00 (Interface 0)
+bAlternateSetting        : 0x00
+bNumEndpoints            : 0x02 (2 Endpoints)
+bInterfaceClass          : 0x08 (Mass Storage)
+bInterfaceSubClass       : 0x06 (SCSI transparent command set)
+bInterfaceProtocol       : 0x50 (Bulk-Only Transport)
+iInterface               : 0x00 (No String Descriptor)
+
+        ----------------- Endpoint Descriptor -----------------
+bLength                  : 0x07 (7 bytes)
+bDescriptorType          : 0x05 (Endpoint Descriptor)
+bEndpointAddress         : 0x81 (Direction=IN EndpointID=1)
+bmAttributes             : 0x02 (TransferType=Bulk)
+wMaxPacketSize           : 0x0040 (64 bytes)
+bInterval                : 0x00 (ignored)
+
+        ----------------- Endpoint Descriptor -----------------
+bLength                  : 0x07 (7 bytes)
+bDescriptorType          : 0x05 (Endpoint Descriptor)
+bEndpointAddress         : 0x02 (Direction=OUT EndpointID=2)
+bmAttributes             : 0x02 (TransferType=Bulk)
+wMaxPacketSize           : 0x0040 (64 bytes)
+bInterval                : 0x00 (ignored)
+
+      ---------- Binary Object Store (BOS) Descriptor -----------
+bLength                  : 0x05 (5 bytes)
+bDescriptorType          : 0x0F (Binary Object Store)
+wTotalLength             : 0x0016 (22 bytes)
+bNumDeviceCaps           : 0x02
+
+        ------------- USB 2.0 Extension Descriptor ------------
+bLength                  : 0x07 (7 bytes)
+bDescriptorType          : 0x10 (Device Capability Descriptor)
+bDevCapabilityType       : 0x02 (USB 2.0 Extension)
+bmAttributes             : 0x02
+ LPMCapable              : 1 (Link Power Management protocol is supported)
+ BESLAndAlternateHIRD    : 0 (BESL & Alternate HIRD definitions are not supported)
+ BaselineBESLValid       : 0 (not valid)
+ DeepBESLValid           : 0 (not valid)
+ BaselineBESL            : 0
+ DeepBESL                : 0
+
+        ----- SuperSpeed USB Device Capability Descriptor -----
+bLength                  : 0x0A (10 bytes)
+bDescriptorType          : 0x10 (Device Capability Descriptor)
+bDevCapabilityType       : 0x03 (SuperSpeed USB Device Capability)
+bmAttributes             : 0x00
+ Bit 0 Reserved          : 0x00
+ Bit 1 LTM Capable       : 0x00 (no)
+ Bit 7:2 Reserved        : 0x00
+wSpeedsSupported         : 0x0E (Full-Speed, High-Speed, SuperSpeed)
+bFunctionalitySupport    : 0x01 (lowest speed with all the functionality is 'Full-Speed')
+bU1DevExitLat            : 0x0A   (less than 10 µs)
+wU2DevExitLat            : 0x0100 (less than 256 µs)
+
+      -------------------- String Descriptors -------------------
+             ------ String Descriptor 0 ------
+bLength                  : 0x04 (4 bytes)
+bDescriptorType          : 0x03 (String Descriptor)
+Language ID[0]           : 0x0409 (English - United States)
+             ------ String Descriptor 1 ------
+bLength                  : 0x0A (10 bytes)
+bDescriptorType          : 0x03 (String Descriptor)
+Language 0x0409          : " USB"  *!*CAUTION  leading space character
+             ------ String Descriptor 2 ------
+bLength                  : 0x22 (34 bytes)
+bDescriptorType          : 0x03 (String Descriptor)
+Language 0x0409          : " SanDisk 3.2Gen1"  *!*CAUTION  leading space character
+             ------ String Descriptor 3 ------
+bLength                  : 0xF2 (242 bytes)
+bDescriptorType          : 0x03 (String Descriptor)
+Language 0x0409          : "040170711096086ff839a5f266eaf52686a1495b709822ad4856156dfec9040a0790000000000000000000001f0a7f0800017b18815581076bb2db34"  *!*CAUTION  Windows uses only up to 63 characters from iSerial for building Device IDs of DISK devices
